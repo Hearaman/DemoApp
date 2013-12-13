@@ -26,8 +26,7 @@ if (isset($_POST['email']))
         <link href="css/main.css" rel="stylesheet" />
         <link href="css/font-awesome.min.css" rel="stylesheet" />
     </head>
-    <body>
-        <?php //require_once './header.php';  ?>
+    <body>        
         <div class="container">
             <br/><br/><br/>
             <div class="row-fluid">
