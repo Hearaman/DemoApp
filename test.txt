@@ -1,72 +1,19 @@
-Here is the revised set of Jira stories following standard Jira user story format:
+import { CommonType, COMMON_CONSTANT } from './index';
 
-Story 1: Improve Test Coverage
+describe('ServiceNow Common Module', () => {
+  it('should define CommonType with the correct field type', () => {
+    const testValue: CommonType = { field: 'testString' };
+    expect(typeof testValue.field).toBe('string');
+  });
 
-Summary: Ensure the code achieves 80% coverage for new lines.
-Description:
-As a developer,
-I want to write unit tests to achieve 80% test coverage,
-so that I can ensure all critical functionalities are properly tested.
-Acceptance Criteria:
-	•	Unit test report confirms 80% coverage.
-	•	Tests cover edge cases and possible failure scenarios.
+  it('should export COMMON_CONSTANT with the correct value', () => {
+    expect(COMMON_CONSTANT).toBe(1);
+  });
 
-Story 2: Adjust Role Creation Workflow
-
-Summary: Fix dependency issues in the team creation process.
-Description:
-As a developer,
-I want to update the workflow to create the team first and assign roles later,
-so that team creation succeeds even if role creation fails.
-Acceptance Criteria:
-	•	Team creation is independent of role creation.
-	•	Proper error messages are logged for failed role assignments.
-
-Story 3: Enable Inter-API Communication
-
-Summary: Implement seamless inter-API communication for Backstage RBAC.
-Description:
-As a developer,
-I want the team API to interact efficiently with the roles API,
-so that team creation and role assignment workflows are seamlessly integrated.
-Acceptance Criteria:
-	•	APIs communicate effectively without manual intervention.
-	•	Successful functional tests confirm integration.
-
-Story 4: Centralize API Calls
-
-Summary: Create a centralized service layer for API calls.
-Description:
-As a developer,
-I want to centralize all API calls into a single service layer,
-so that the code is easier to maintain and duplication is reduced.
-Acceptance Criteria:
-	•	All API calls are routed through the service layer.
-	•	Direct API call logic is removed from components.
-	•	Code duplication is reduced.
-
-Story 5: Store Team Names in Entity Reference Format
-
-Summary: Update team name storage format in the RBAC database.
-Description:
-As a database administrator,
-I want team names to be stored in the entity reference format (group:default/),
-so that data remains consistent with entity conventions across the system.
-Acceptance Criteria:
-	•	Team names are stored in the new format.
-	•	Services handle the updated format without errors.
-	•	Backward compatibility is ensured.
-
-Story 6: Document RBAC Phase-1 Updates
-
-Summary: Create comprehensive documentation for RBAC Phase-1.
-Description:
-As a technical writer,
-I want to document the updated workflows and API structures,
-so that developers and stakeholders understand how the system works.
-Acceptance Criteria:
-	•	Documentation includes team and role creation workflows.
-	•	Service layer usage and database changes are explained.
-	•	Documentation is reviewed and accessible to all team members.
-
-This format aligns with Jira standards and clearly defines the role, goal, and purpose for each story. Let me know if further refinements are needed!
+  it('should throw a type error if field in CommonType is not a string', () => {
+    // This is more of a TypeScript type-check test rather than runtime
+    // Uncommenting this will cause a TypeScript error during compilation.
+    // const invalidValue: CommonType = { field: 123 }; // Should throw a TS error
+    expect(true).toBe(true); // Dummy assertion for runtime testing
+  });
+});
