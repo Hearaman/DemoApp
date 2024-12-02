@@ -1,28 +1,67 @@
-components:
-  schemas:
-    ApplicationInfo:
-      type: object
-      properties:
-        u_used_for:
-          type: string
-          description: The environment the application is used for (e.g., Production, Development).
-        name:
-          type: string
-          description: The name of the application.
-        u_application_id:
-          type: string
-          description: The unique application ID.
-      required:
-        - u_used_for
-        - name
-        - u_application_id
+Here are the Jira stories based on the given screenshot:
 
-    ApplicationsResponse:
-      type: object
-      properties:
-        result:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationInfo'
-      required:
-        - result
+Story 1: Improve Test Coverage
+
+Summary: Ensure the code achieves 80% coverage for new lines.
+Description:
+	•	Write unit tests for all critical functionalities.
+	•	Verify that tests cover edge cases and possible failure scenarios.
+Acceptance Criteria:
+	•	Unit test report confirms 80% coverage.
+	•	No critical functionality is left untested.
+
+Story 2: Adjust Role Creation Workflow
+
+Summary: Fix dependency issues in the team creation process.
+Description:
+	•	Update the workflow to create the team before roles are assigned.
+	•	Ensure the process handles failures gracefully to avoid breaking team creation.
+Acceptance Criteria:
+	•	Team creation succeeds independently of role creation.
+	•	Error messages are logged for failed role assignments without disrupting the team creation flow.
+
+Story 3: Implement Inter-API Communication
+
+Summary: Enable efficient inter-API communication for Backstage RBAC.
+Description:
+	•	Investigate API dependencies and enable communication between the team API and the roles API.
+	•	Update the APIs to allow seamless interactions.
+Acceptance Criteria:
+	•	APIs can communicate without manual intervention.
+	•	Functional testing confirms successful role assignment using the team API.
+
+Story 4: Centralize API Calls
+
+Summary: Create a centralized service layer for API calls.
+Description:
+	•	Identify duplicate API calls across the project.
+	•	Develop a service layer to manage all API calls in one place.
+	•	Replace direct API calls in components with the service layer functions.
+Acceptance Criteria:
+	•	All API calls are routed through the service layer.
+	•	Components no longer include direct API call logic.
+	•	Code duplication is reduced.
+
+Story 5: Store Team Names with Entity Reference Format
+
+Summary: Use entity reference format for storing team names in the RBAC database.
+Description:
+	•	Modify the rbac_roles table to store team names in the group:default/ format.
+	•	Update all relevant services to use the new format.
+	•	Ensure backward compatibility during the migration.
+Acceptance Criteria:
+	•	Team names are stored in the new format in the database.
+	•	All services handle the updated format without errors.
+
+Story 6: Documentation for RBAC Phase-1
+
+Summary: Create comprehensive documentation for RBAC Phase-1.
+Description:
+	•	Document the updated workflows, including team and role creation.
+	•	Provide usage instructions for the service layer.
+	•	Include a summary of database changes and the new entity reference format.
+Acceptance Criteria:
+	•	Documentation is complete and reviewed.
+	•	All relevant team members have access to the documentation.
+
+These stories can be refined further with additional details based on team discussions. Let me know if you’d like help with prioritizing or estimating these stories!
