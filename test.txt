@@ -1,67 +1,72 @@
-Here are the Jira stories based on the given screenshot:
+Here is the revised set of Jira stories following standard Jira user story format:
 
 Story 1: Improve Test Coverage
 
 Summary: Ensure the code achieves 80% coverage for new lines.
 Description:
-	•	Write unit tests for all critical functionalities.
-	•	Verify that tests cover edge cases and possible failure scenarios.
+As a developer,
+I want to write unit tests to achieve 80% test coverage,
+so that I can ensure all critical functionalities are properly tested.
 Acceptance Criteria:
 	•	Unit test report confirms 80% coverage.
-	•	No critical functionality is left untested.
+	•	Tests cover edge cases and possible failure scenarios.
 
 Story 2: Adjust Role Creation Workflow
 
 Summary: Fix dependency issues in the team creation process.
 Description:
-	•	Update the workflow to create the team before roles are assigned.
-	•	Ensure the process handles failures gracefully to avoid breaking team creation.
+As a developer,
+I want to update the workflow to create the team first and assign roles later,
+so that team creation succeeds even if role creation fails.
 Acceptance Criteria:
-	•	Team creation succeeds independently of role creation.
-	•	Error messages are logged for failed role assignments without disrupting the team creation flow.
+	•	Team creation is independent of role creation.
+	•	Proper error messages are logged for failed role assignments.
 
-Story 3: Implement Inter-API Communication
+Story 3: Enable Inter-API Communication
 
-Summary: Enable efficient inter-API communication for Backstage RBAC.
+Summary: Implement seamless inter-API communication for Backstage RBAC.
 Description:
-	•	Investigate API dependencies and enable communication between the team API and the roles API.
-	•	Update the APIs to allow seamless interactions.
+As a developer,
+I want the team API to interact efficiently with the roles API,
+so that team creation and role assignment workflows are seamlessly integrated.
 Acceptance Criteria:
-	•	APIs can communicate without manual intervention.
-	•	Functional testing confirms successful role assignment using the team API.
+	•	APIs communicate effectively without manual intervention.
+	•	Successful functional tests confirm integration.
 
 Story 4: Centralize API Calls
 
 Summary: Create a centralized service layer for API calls.
 Description:
-	•	Identify duplicate API calls across the project.
-	•	Develop a service layer to manage all API calls in one place.
-	•	Replace direct API calls in components with the service layer functions.
+As a developer,
+I want to centralize all API calls into a single service layer,
+so that the code is easier to maintain and duplication is reduced.
 Acceptance Criteria:
 	•	All API calls are routed through the service layer.
-	•	Components no longer include direct API call logic.
+	•	Direct API call logic is removed from components.
 	•	Code duplication is reduced.
 
-Story 5: Store Team Names with Entity Reference Format
+Story 5: Store Team Names in Entity Reference Format
 
-Summary: Use entity reference format for storing team names in the RBAC database.
+Summary: Update team name storage format in the RBAC database.
 Description:
-	•	Modify the rbac_roles table to store team names in the group:default/ format.
-	•	Update all relevant services to use the new format.
-	•	Ensure backward compatibility during the migration.
+As a database administrator,
+I want team names to be stored in the entity reference format (group:default/),
+so that data remains consistent with entity conventions across the system.
 Acceptance Criteria:
-	•	Team names are stored in the new format in the database.
-	•	All services handle the updated format without errors.
+	•	Team names are stored in the new format.
+	•	Services handle the updated format without errors.
+	•	Backward compatibility is ensured.
 
-Story 6: Documentation for RBAC Phase-1
+Story 6: Document RBAC Phase-1 Updates
 
 Summary: Create comprehensive documentation for RBAC Phase-1.
 Description:
-	•	Document the updated workflows, including team and role creation.
-	•	Provide usage instructions for the service layer.
-	•	Include a summary of database changes and the new entity reference format.
+As a technical writer,
+I want to document the updated workflows and API structures,
+so that developers and stakeholders understand how the system works.
 Acceptance Criteria:
-	•	Documentation is complete and reviewed.
-	•	All relevant team members have access to the documentation.
+	•	Documentation includes team and role creation workflows.
+	•	Service layer usage and database changes are explained.
+	•	Documentation is reviewed and accessible to all team members.
 
-These stories can be refined further with additional details based on team discussions. Let me know if you’d like help with prioritizing or estimating these stories!
+This format aligns with Jira standards and clearly defines the role, goal, and purpose for each story. Let me know if further refinements are needed!
