@@ -1,55 +1,28 @@
-openapi: 3.0.0
-info:
-  title: ServiceNow Backend Plugin API
-  version: 1.0.0
-  description: API for the ServiceNow backend plugin.
-servers:
-  - url: http://localhost:7000/api/servicenow
-paths:
-  /health:
-    get:
-      summary: Health Check
-      operationId: healthCheck
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: ok
-  /cmdb/app/search/{keyword}:
-    get:
-      summary: Verify if APP ID is in CMDB App List
-      operationId: verifyAppId
-      parameters:
-        - name: keyword
-          in: path
-          required: true
-          description: The keyword to search in the CMDB App List
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Successfully fetched suggestions
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    type: array
-                    items:
-                      type: string
-        '500':
-          description: Failed to validate CMDB App ID
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
+components:
+  schemas:
+    ApplicationInfo:
+      type: object
+      properties:
+        u_used_for:
+          type: string
+          description: The environment the application is used for (e.g., Production, Development).
+        name:
+          type: string
+          description: The name of the application.
+        u_application_id:
+          type: string
+          description: The unique application ID.
+      required:
+        - u_used_for
+        - name
+        - u_application_id
+
+    ApplicationsResponse:
+      type: object
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationInfo'
+      required:
+        - result
