@@ -1,19 +1,269 @@
-import { CommonType, COMMON_CONSTANT } from './index';
+openapi: 3.0.0
+info:
+  title: RBAC Roles API
+  version: 1.0.0
+  description: API for managing roles in the RBAC system
+servers:
+  - url: /
+paths:
+  /roles:
+    get:
+      summary: Get all roles
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: A list of roles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleListResponse'
+    post:
+      summary: Create a new role
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoleRequest'
+      responses:
+        '201':
+          description: Role created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponse'
 
-describe('ServiceNow Common Module', () => {
-  it('should define CommonType with the correct field type', () => {
-    const testValue: CommonType = { field: 'testString' };
-    expect(typeof testValue.field).toBe('string');
-  });
+  /roles/{id}:
+    get:
+      summary: Get a role by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the role
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Role found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponse'
+        '404':
+          description: Role not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update a role by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the role
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRoleRequest'
+      responses:
+        '200':
+          description: Role updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleResponse'
+        '404':
+          description: Role not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete a role by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the role
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Role deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteRoleResponse'
+        '404':
+          description: Role not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-  it('should export COMMON_CONSTANT with the correct value', () => {
-    expect(COMMON_CONSTANT).toBe(1);
-  });
+  /roleInfo/{userRef}:
+    put:
+      summary: Update role info based on user reference
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: userRef
+          in: path
+          required: true
+          description: The user reference ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User role info updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRoleInfoResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-  it('should throw a type error if field in CommonType is not a string', () => {
-    // This is more of a TypeScript type-check test rather than runtime
-    // Uncommenting this will cause a TypeScript error during compilation.
-    // const invalidValue: CommonType = { field: 123 }; // Should throw a TS error
-    expect(true).toBe(true); // Dummy assertion for runtime testing
-  });
-});
+components:
+  schemas:
+    Role:
+      type: object
+      properties:
+        role_id:
+          type: integer
+        role_name:
+          type: string
+        role_type:
+          type: string
+        team:
+          type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        active:
+          type: boolean
+        description:
+          type: string
+        is_deleted:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    RoleListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+    RoleResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/Role'
+    CreateRoleRequest:
+      type: object
+      properties:
+        role_name:
+          type: string
+        role_type:
+          type: string
+        adGroups:
+          type: array
+          items:
+            type: string
+        team:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        created_by:
+          type: string
+        updated_by:
+          type: string
+        active:
+          type: boolean
+        description:
+          type: string
+        is_deleted:
+          type: boolean
+      required:
+        - role_name
+        - role_type
+        - created_by
+        - updated_by
+    UpdateRoleRequest:
+      allOf:
+        - $ref: '#/components/schemas/CreateRoleRequest'
+        - type: object
+          required:
+            - updated_by
+    DeleteRoleResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+    UserRoleInfoResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: string
+            roles:
+              type: array
+              items:
+                type: string
+            teams:
+              type: array
+              items:
+                type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
