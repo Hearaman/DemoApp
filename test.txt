@@ -1,1 +1,55 @@
 
+import { Request, Response, NextFunction } from 'express';
+import validateRoleFilter from './validateRoleFilter'; // Adjust the import path accordingly
+import { roleFilterSchema } from './schemas'; // Adjust the import if schema is in a separate file
+
+jest.mock('./schemas', () => ({
+  roleFilterSchema: {
+    parse: jest.fn(),
+  },
+}));
+
+describe('validateRoleFilter Middleware', () => {
+  let req: Partial<Request>;
+  let res: Partial<Response>;
+  let next: jest.Mock;
+
+  beforeEach(() => {
+    req = { query: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+    next = jest.fn();
+    jest.clearAllMocks();
+  });
+
+  it('should call next() when validation passes', () => {
+    (roleFilterSchema.parse as jest.Mock).mockImplementation(() => true);
+
+    validateRoleFilter(req as Request, res as Response, next);
+
+    expect(roleFilterSchema.parse).toHaveBeenCalledWith(req.query);
+    expect(next).toHaveBeenCalled();
+    expect(res.status).not.toHaveBeenCalled();
+  });
+
+  it('should return 400 with validation error when validation fails', () => {
+    const validationError = { errors: ['Invalid query'] };
+    (roleFilterSchema.parse as jest.Mock).mockImplementation(() => {
+      throw validationError;
+    });
+
+    validateRoleFilter(req as Request, res as Response, next);
+
+    expect(roleFilterSchema.parse).toHaveBeenCalledWith(req.query);
+    expect(next).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      message: 'Validation error',
+      data: null,
+      errors: validationError.errors,
+    });
+  });
+});
